@@ -1,0 +1,11 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#E8F5E9" rx="8"/>
+  <defs>
+    <pattern id="missionPattern" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="2" fill="#A5D6A7" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#missionPattern)" rx="8"/>
+  <circle cx="200" cy="150" r="60" fill="#81C784" opacity="0.2"/>
+  <circle cx="150" cy="250" r="40" fill="#66BB6A" opacity="0.2"/>
+</svg>
