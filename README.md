@@ -6,6 +6,11 @@ A one-page website for the Youth Press Project.
 
 The website currently uses SVG placeholder images that match the design. To replace them with your own images, simply add your images to the `assets/images/` folder with the following filenames (you can use .jpg, .png, or .svg formats):
 
+### Favicon
+- **File:** `assets/images/favicon.png` (or .ico)
+- **Description:** The small icon that appears in browser tabs
+- **Recommended size:** 32x32px or 64x64px PNG file
+
 ### Hero Background
 - **File:** `assets/images/hero-background.jpg` (or .png, .svg)
 - **Description:** The blurred background image for the hero section (a blur filter is applied automatically)
