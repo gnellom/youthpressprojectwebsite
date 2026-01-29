@@ -140,7 +140,7 @@
     </footer>
     <!-- Count-up Animation Script -->
     <script>
-        function animateCounter(element, target, suffix = '') {
+        function animateCounter(element, target, prefix = '', suffix = '') {
             let current = 0;
             const increment = target / 60; // Animate over ~1 second (60 frames)
             const duration = 1000; // 1 second
@@ -149,10 +149,10 @@
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
-                    element.textContent = target + suffix;
+                    element.textContent = prefix + target + suffix;
                     clearInterval(timer);
                 } else {
-                    element.textContent = Math.floor(current) + suffix;
+                    element.textContent = prefix + Math.floor(current) + suffix;
                 }
             }, stepTime);
         }
@@ -166,20 +166,28 @@
                     if (entry.isIntersecting) {
                         stats.forEach(stat => {
                             const text = stat.textContent;
-                            let target, suffix = '';
+                            let target, prefix = '', suffix = '';
                             
-                            if (text.includes('+')) {
-                                suffix = '+';
-                                target = parseInt(text.replace('+', ''));
-                            } else if (text.includes('K')) {
-                                suffix = 'K+';
-                                target = parseInt(text.replace('K+', ''));
-                            } else {
-                                target = parseInt(text);
+                            // Handle dollar sign
+                            if (text.includes('$')) {
+                                prefix = '$';
                             }
                             
-                            stat.textContent = '0' + suffix;
-                            animateCounter(stat, target, suffix);
+                            // Extract number and suffix
+                            let numberPart = text.replace('$', '').trim();
+                            
+                            if (numberPart.includes('K+')) {
+                                suffix = 'K+';
+                                target = parseInt(numberPart.replace('K+', ''));
+                            } else if (numberPart.includes('+')) {
+                                suffix = '+';
+                                target = parseInt(numberPart.replace('+', ''));
+                            } else {
+                                target = parseInt(numberPart);
+                            }
+                            
+                            stat.textContent = prefix + '0' + suffix;
+                            animateCounter(stat, target, prefix, suffix);
                         });
                         observer.unobserve(entry.target);
                     }
