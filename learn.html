@@ -45,38 +45,45 @@
             <h2 class="section-heading">Behind the Scenes</h2>
             <p class="section-description">Photos from our Youth Press Project workshops in Baltimore.</p>
 
-            <div class="gallery-grid">
-                <!-- Replace src with actual workshop photos -->
-                <div class="gallery-item gallery-item--large">
-                    <div class="gallery-placeholder">
-                        <span class="gallery-placeholder-text">Workshop Photo</span>
+            <div class="carousel" id="workshopCarousel">
+                <div class="carousel-track-wrapper">
+                    <div class="carousel-track">
+                        <!-- Replace src with actual workshop photos -->
+                        <div class="carousel-slide">
+                            <div class="gallery-placeholder">
+                                <span class="gallery-placeholder-text">Workshop Photo 1</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="gallery-placeholder">
+                                <span class="gallery-placeholder-text">Workshop Photo 2</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="gallery-placeholder">
+                                <span class="gallery-placeholder-text">Workshop Photo 3</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="gallery-placeholder">
+                                <span class="gallery-placeholder-text">Workshop Photo 4</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="gallery-placeholder">
+                                <span class="gallery-placeholder-text">Workshop Photo 5</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="gallery-placeholder">
+                                <span class="gallery-placeholder-text">Workshop Photo 6</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <div class="gallery-placeholder">
-                        <span class="gallery-placeholder-text">Workshop Photo</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-placeholder">
-                        <span class="gallery-placeholder-text">Workshop Photo</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-placeholder">
-                        <span class="gallery-placeholder-text">Workshop Photo</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-placeholder">
-                        <span class="gallery-placeholder-text">Workshop Photo</span>
-                    </div>
-                </div>
-                <div class="gallery-item gallery-item--wide">
-                    <div class="gallery-placeholder">
-                        <span class="gallery-placeholder-text">Workshop Photo</span>
-                    </div>
-                </div>
+                <button class="carousel-btn carousel-btn--prev" aria-label="Previous photo">&#8592;</button>
+                <button class="carousel-btn carousel-btn--next" aria-label="Next photo">&#8594;</button>
+                <div class="carousel-dots"></div>
             </div>
         </div>
     </section>
@@ -93,9 +100,9 @@
                 <!-- Workshop 1 -->
                 <div class="workshop-card">
                     <div class="workshop-number">01</div>
-                    <h3 class="workshop-title">Introduction to Journalism</h3>
+                    <h3 class="workshop-title">The Importance of Youth Journalism</h3>
                     <p class="workshop-summary">
-                        Students explored the fundamentals of journalism — what makes a story newsworthy, the difference between news and opinion, and how professional reporters approach a beat. We discussed real examples from local Baltimore coverage and talked about what it means to serve your community through honest reporting.
+                        Students explored the fundamentals of journalsm and the unique role student journalists have in their community.
                     </p>
                     <!-- Replace # with the actual link (slides, recording, handout, etc.) -->
                     <a href="#" class="workshop-button">View Materials</a>
@@ -252,6 +259,42 @@
             </div>
         </div>
     </section>
+
+    <script>
+        (function () {
+            const carousel = document.getElementById('workshopCarousel');
+            const track = carousel.querySelector('.carousel-track');
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const dotsContainer = carousel.querySelector('.carousel-dots');
+            let current = 0;
+
+            slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.className = 'carousel-dot' + (i === 0 ? ' carousel-dot--active' : '');
+                dot.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+                dot.addEventListener('click', () => goTo(i));
+                dotsContainer.appendChild(dot);
+            });
+
+            function goTo(index) {
+                current = (index + slides.length) % slides.length;
+                track.style.transform = 'translateX(-' + current * 100 + '%)';
+                carousel.querySelectorAll('.carousel-dot').forEach((d, i) => {
+                    d.classList.toggle('carousel-dot--active', i === current);
+                });
+            }
+
+            carousel.querySelector('.carousel-btn--prev').addEventListener('click', () => goTo(current - 1));
+            carousel.querySelector('.carousel-btn--next').addEventListener('click', () => goTo(current + 1));
+
+            let startX = 0;
+            track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            track.addEventListener('touchend', e => {
+                const diff = startX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+            });
+        })();
+    </script>
 
     <!-- Footer -->
     <footer class="footer">
